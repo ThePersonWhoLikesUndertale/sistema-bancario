@@ -1,4 +1,3 @@
-# sistema-bancario
 ## Sistema de um banco criado utilizando a linguagem Python.
 
 É possível:

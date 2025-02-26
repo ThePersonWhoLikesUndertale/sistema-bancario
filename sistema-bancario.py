@@ -17,7 +17,7 @@ LIMITE_SAQUES = 3
 while True:
     opcao = input(menu)
     
-    if opcao == 1:
+    if opcao == "1":
         deposito = input("""Digite o valor que deseja depositar.
                          => """)
         if deposito > 0:
@@ -29,7 +29,7 @@ while True:
         else:
             print("Valor inválido, por favor tente novamente.")
         
-    elif opcao == 2:
+    elif opcao == "2":
         saque = input("""Digite o valor que deseja sacar.
                       => """)
         if saque <= saldo and saque <= limite and saque > 0 and numero_saques < LIMITE_SAQUES:
@@ -48,10 +48,10 @@ while True:
         else:
             print("Valor inválido. Por favor, tente novamente.")
             
-    elif opcao == 3:
+    elif opcao == "3":
         print(extrato+f"Saldo atual: R$ {saldo:.2f}")
     
-    elif opcao == 0:
+    elif opcao == "0":
         break
     
     else:

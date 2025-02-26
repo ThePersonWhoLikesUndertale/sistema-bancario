@@ -18,8 +18,7 @@ while True:
     opcao = float(input(menu))
     
     if opcao == 1:
-        deposito = float(input("""Digite o valor que deseja depositar.
-=> """))
+        deposito = float(input("Digite o valor que deseja depositar.\n=> "))
         if deposito > 0:
             saldo += deposito
             extrato += f"Depósito\nValor: R$ {deposito:.2f}\n\n"
@@ -28,8 +27,7 @@ while True:
             print("Valor inválido, por favor tente novamente.")
         
     elif opcao == 2:
-        saque = float(input("""Digite o valor que deseja sacar.
-=> """))
+        saque = float(input("Digite o valor que deseja sacar.\n=> "))
         if saque <= saldo and saque <= limite and saque > 0 and numero_saques < LIMITE_SAQUES:
             saldo -= saque
             extrato += f"Saque\nValor: R$ {saque:.2f}\n\n"

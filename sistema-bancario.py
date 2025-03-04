@@ -16,7 +16,7 @@ extrato = ""
 numero_transacao = 0
 LIMITE_TRANSACAO = 10
 data_hora_atual = datetime.now(timezone(timedelta(hours=-3)))
-mascara = "%d/%m/%Y %H:%M"
+mascara = "%d/%m/%Y %H:%M:%S"
 data_hora_str = data_hora_atual.strftime(mascara)
 
 while True:

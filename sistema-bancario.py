@@ -1,3 +1,5 @@
+from datetime import datetime, timezone, timedelta
+
 menu = """
 Bem-vindo! O que deseja fazer?
       
@@ -13,6 +15,7 @@ limite = 500
 extrato = ""
 numero_transacao = 0
 LIMITE_TRANSACAO = 10
+data_hora_atual = datetime.now(timezone(timedelta(hours=-3)))
 
 while True:
     opcao = float(input(menu))
@@ -21,7 +24,7 @@ while True:
         deposito = float(input("Informe o valor do depósito: "))
         if deposito > 0 and numero_transacao < LIMITE_TRANSACAO:
             saldo += deposito
-            extrato += f"Depósito\nValor: R$ {deposito:.2f}\n\n"
+            extrato += f"Depósito\nValor: R$ {deposito:.2f}\nData: {data_hora_atual.date()}\nHora: {data_hora_atual.time()}\n\n"
             numero_transacao += 1
             print("Depósito bem sucedido!")
         elif numero_transacao >= LIMITE_TRANSACAO:
@@ -33,7 +36,7 @@ while True:
         saque = float(input("Informe o valor do saque: "))
         if saque <= saldo and saque <= limite and saque > 0 and numero_transacao < LIMITE_TRANSACAO:
             saldo -= saque
-            extrato += f"Saque\nValor: R$ {saque:.2f}\n\n"
+            extrato += f"Saque\nValor: R$ {saque:.2f}\nData: {data_hora_atual.date()}\nHora: {data_hora_atual.time()}\n\n"
             numero_transacao += 1
             print("Saque bem sucedido!")
         elif numero_transacao >= LIMITE_TRANSACAO:

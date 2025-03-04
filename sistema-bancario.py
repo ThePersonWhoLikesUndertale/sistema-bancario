@@ -11,30 +11,33 @@ Opções:
 saldo = 0
 limite = 500
 extrato = ""
-numero_saques = 0
-LIMITE_SAQUES = 3
+numero_transacao = 0
+LIMITE_TRANSACAO = 10
 
 while True:
     opcao = float(input(menu))
     
     if opcao == 1:
         deposito = float(input("Informe o valor do depósito: "))
-        if deposito > 0:
+        if deposito > 0 and numero_transacao < LIMITE_TRANSACAO:
             saldo += deposito
             extrato += f"Depósito\nValor: R$ {deposito:.2f}\n\n"
+            numero_transacao += 1
             print("Depósito bem sucedido!")
+        elif numero_transacao >= LIMITE_TRANSACAO:
+            print("Você esgotou suas transações diárias! Tente novamente outro dia.")
         else:
             print("Valor inválido, por favor tente novamente.")
         
     elif opcao == 2:
         saque = float(input("Informe o valor do saque: "))
-        if saque <= saldo and saque <= limite and saque > 0 and numero_saques < LIMITE_SAQUES:
+        if saque <= saldo and saque <= limite and saque > 0 and numero_transacao < LIMITE_TRANSACAO:
             saldo -= saque
             extrato += f"Saque\nValor: R$ {saque:.2f}\n\n"
-            numero_saques += 1
+            numero_transacao += 1
             print("Saque bem sucedido!")
-        elif numero_saques >= LIMITE_SAQUES:
-            print("Você esgotou seus saques diários! Tente novamente outro dia.")
+        elif numero_transacao >= LIMITE_TRANSACAO:
+            print("Você esgotou suas transações diárias! Tente novamente outro dia.")
         elif saque > limite:
             print("Seu saque não pode ultrapassar R$ 500.00. Por favor, insira outro valor.")
         elif saque > saldo:

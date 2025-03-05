@@ -7,6 +7,7 @@ def menu():
     [1]\tDepositar
     [2]\tSacar
     [3]\tExtrato
+    [4]\tNovo Usuário
     [0]\tSair
     => """
     return input(textwrap.dedent(menu))
@@ -47,12 +48,40 @@ def mostrar_extrato(extrato, saldo):
     print(f"Saldo atual: R$ {saldo:.2f}")
     print("=============================")
 
+def criar_usuario(usuarios):
+    cpf = float(input("Informe seu CPF (Só números): "))
+    usuario = filtrar_usuario(cpf, usuarios)
+    
+    if usuario:
+        print("Esse usuário já existe!")
+        return
+    
+    nome = input("Informe seu nome completo: ")
+    data_nascimento = input("Informe sua data de nascimento (dd/mm/aaaa): ")
+    endereco = input("Informe seu endereço (logradouro, número - bairro - cidade/sigla estado): ")
+    
+    usuarios.append({"nome": nome, "data_nascimento": data_nascimento, "cpf": cpf, "endereco": endereco})
+    
+    print("Usuário criado com sucesso!")
+
+def filtrar_usuario(cpf, usuarios):
+    for usuario in usuarios:
+        if usuario["cpf"] == cpf:
+            print("CPF inválido. Esse usuário já existe.")
+            return True
+        else:
+            pass
+    
+    return False
+
 def main():
+    LIMITE_TRANSACAO = 10
+    
     saldo = 0
     limite = 500
     extrato = ""
     numero_transacao = 0
-    LIMITE_TRANSACAO = 10
+    usuarios = []
     data_hora_atual = datetime.now(timezone(timedelta(hours=-3)))
     mascara = "%d/%m/%Y %H:%M:%S"
     data_hora_str = data_hora_atual.strftime(mascara)
@@ -70,6 +99,9 @@ def main():
                 
         elif opcao == 3:
             mostrar_extrato(extrato, saldo)
+        
+        elif opcao == 4:
+            criar_usuario(usuarios)
         
         elif opcao == 0:
             break

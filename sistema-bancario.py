@@ -1,4 +1,15 @@
 from datetime import datetime, timezone, timedelta
+import textwrap
+
+def menu():
+    menu = """\n
+    ========== MENU ==========
+    [1]\tDepositar
+    [2]\tSacar
+    [3]\tExtrato
+    [0]\tSair
+    => """
+    return input(textwrap.dedent(menu))
 
 def depositar(valor, saldo, extrato, numero_transacao, limite_transacao, data_hora_str):
     if valor > 0 and numero_transacao < limite_transacao:
@@ -37,16 +48,6 @@ def mostrar_extrato(extrato, saldo):
     print("=============================")
 
 def main():
-    menu = """
-Bem-vindo! O que deseja fazer?
-      
-Opções:
-[1] Depositar
-[2] Sacar
-[3] Extrato
-[0] Sair
-
-=> """
     saldo = 0
     limite = 500
     extrato = ""
@@ -57,7 +58,7 @@ Opções:
     data_hora_str = data_hora_atual.strftime(mascara)
     
     while True:
-        opcao = float(input(menu))
+        opcao = float(menu())
         
         if opcao == 1:
             deposito = float(input("Informe o valor do depósito: "))

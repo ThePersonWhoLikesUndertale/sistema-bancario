@@ -8,6 +8,8 @@ def menu():
     [2]\tSacar
     [3]\tExtrato
     [4]\tNovo Usuário
+    [5]\tNova Conta
+    [6]\tListar Contas
     [0]\tSair
     => """
     return input(textwrap.dedent(menu))
@@ -65,23 +67,42 @@ def criar_usuario(usuarios):
     print("Usuário criado com sucesso!")
 
 def filtrar_usuario(cpf, usuarios):
-    for usuario in usuarios:
-        if usuario["cpf"] == cpf:
-            print("CPF inválido. Esse usuário já existe.")
-            return True
-        else:
-            pass
+    usuarios_filtrados = [usuario for usuario in usuarios if usuario["cpf"] == cpf]
+    return usuarios_filtrados[0] if usuarios_filtrados else None
+
+def criar_conta(contas, agencia, numero_conta, usuarios):
+    cpf = float(input("Informe seu CPF (Só números): "))
+    usuario = filtrar_usuario(cpf, usuarios)
     
-    return False
+    if not usuario:
+        print("Esse usuário não existe, por favor tente novamente.")
+        return
+    
+    contas.append({"agencia": agencia, "numero_conta": numero_conta, "usuario": usuario})
+    
+    print("Conta criada com sucesso!")
+
+def listar_contas(contas):
+    for conta in contas:
+        linha = f"""\n
+            Agência:\t{conta['agencia']}
+            C/C:\t\t{conta['numero_conta']}
+            Titular:\t{conta['usuario']['nome']}
+        """
+        print("=" * 100)
+        print(textwrap.dedent(linha))
 
 def main():
     LIMITE_TRANSACAO = 10
+    AGENCIA = "0001"
     
     saldo = 0
     limite = 500
     extrato = ""
     numero_transacao = 0
     usuarios = []
+    contas = []
+    numero_conta = 1
     data_hora_atual = datetime.now(timezone(timedelta(hours=-3)))
     mascara = "%d/%m/%Y %H:%M:%S"
     data_hora_str = data_hora_atual.strftime(mascara)
@@ -102,6 +123,13 @@ def main():
         
         elif opcao == 4:
             criar_usuario(usuarios)
+        
+        elif opcao == 5:
+            criar_conta(contas, AGENCIA, numero_conta, usuarios)
+            numero_conta += 1
+        
+        elif opcao == 6:
+            listar_contas(contas)
         
         elif opcao == 0:
             break

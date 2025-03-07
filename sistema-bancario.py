@@ -76,11 +76,13 @@ def criar_conta(contas, agencia, numero_conta, usuarios):
     
     if not usuario:
         print("Esse usuário não existe, por favor tente novamente.")
-        return
+        return numero_conta
     
     contas.append({"agencia": agencia, "numero_conta": numero_conta, "usuario": usuario})
+    numero_conta += 1
     
     print("Conta criada com sucesso!")
+    return numero_conta
 
 def listar_contas(contas):
     for conta in contas:
@@ -133,8 +135,7 @@ def main():
             criar_usuario(usuarios)
         
         elif opcao == 5:
-            criar_conta(contas, AGENCIA, numero_conta, usuarios)
-            numero_conta += 1
+            numero_conta = criar_conta(contas, AGENCIA, numero_conta, usuarios)
         
         elif opcao == 6:
             listar_contas(contas)

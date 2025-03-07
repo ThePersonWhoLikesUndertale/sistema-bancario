@@ -14,7 +14,7 @@ def menu():
     => """
     return input(textwrap.dedent(menu))
 
-def depositar(valor, saldo, extrato, numero_transacao, limite_transacao, data_hora_str):
+def depositar(valor, saldo, extrato, numero_transacao, limite_transacao, data_hora_str, /):
     if valor > 0 and numero_transacao < limite_transacao:
         saldo += valor
         extrato += f"Depósito\nValor: R$ {valor:.2f}\nData e Hora: {data_hora_str}\n\n"
@@ -27,7 +27,7 @@ def depositar(valor, saldo, extrato, numero_transacao, limite_transacao, data_ho
     
     return saldo, extrato, numero_transacao
 
-def sacar(valor, saldo, extrato, limite, numero_transacao, limite_transacao, data_hora_str):
+def sacar(*, valor, saldo, extrato, limite, numero_transacao, limite_transacao, data_hora_str):
     if valor <= saldo and valor <= limite and valor > 0 and numero_transacao < limite_transacao:
         saldo -= valor
         extrato += f"Saque\nValor: R$ {valor:.2f}\nData e Hora: {data_hora_str}\n\n"
@@ -44,7 +44,7 @@ def sacar(valor, saldo, extrato, limite, numero_transacao, limite_transacao, dat
     
     return saldo, extrato, numero_transacao
 
-def mostrar_extrato(extrato, saldo):
+def mostrar_extrato(saldo, /, *, extrato):
     print("\n========== EXTRATO ==========")
     print("Não foram realizadas movimentações." if not extrato else extrato)
     print(f"Saldo atual: R$ {saldo:.2f}")
@@ -116,10 +116,18 @@ def main():
             
         elif opcao == 2:
             saque = float(input("Informe o valor do saque: "))
-            saldo, extrato, numero_transacao = sacar(saque, saldo, extrato, limite, numero_transacao, LIMITE_TRANSACAO, data_hora_str)
+            saldo, extrato, numero_transacao = sacar(
+                valor=saque, 
+                saldo=saldo, 
+                extrato=extrato, 
+                limite=limite, 
+                numero_transacao=numero_transacao, 
+                limite_transacao=LIMITE_TRANSACAO, 
+                data_hora_str=data_hora_str
+                )
                 
         elif opcao == 3:
-            mostrar_extrato(extrato, saldo)
+            mostrar_extrato(saldo, extrato=extrato)
         
         elif opcao == 4:
             criar_usuario(usuarios)

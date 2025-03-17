@@ -39,7 +39,7 @@ class Transacao:
         pass
 
 class Historico:
-    def adicionar_transacao(transacao: Transacao):
+    def adicionar_transacao(self, transacao):
         pass
 
 def menu():

@@ -1,5 +1,6 @@
 from datetime import datetime, timezone, timedelta
 import textwrap
+from abc import ABC
 
 class Cliente:
     def __init__(self, cpf, nome, data_nascimento, endereco, contas):
@@ -13,34 +14,43 @@ class Cliente:
         pass
     
     def adicionar_conta(self, conta):
-        self.contas.append(conta)
+        self._contas.append(conta)
 
 class Conta:
-    def __init__(self, saldo, numero, agencia, cliente, historico, limite, limite_saque):
+    def __init__(self, saldo, numero, agencia, cliente, historico):
         self._saldo = saldo
         self._numero = numero
         self._agencia = agencia
         self._cliente = cliente
         self._historico = historico
-        self._limite = limite
-        self._limite_saque = limite_saque
+    
+    def saldo(self):
+        return self._saldo
     
     def nova_conta(self, cliente, numero):
         pass
     
     def sacar(self, valor):
-        pass
+        return True
     
     def depositar(self, valor):
-        pass
-
-class Transacao:
-    def registrar(self, conta):
-        pass
+        return False
 
 class Historico:
     def adicionar_transacao(self, transacao):
         pass
+
+class Transacao(ABC):
+    def registrar(self, conta):
+        pass
+
+class Deposito(Transacao):
+    def __init__(self, valor):
+        self._valor = valor
+
+class Saque(Transacao):
+    def __init__(self, valor):
+        self._valor = valor
 
 def menu():
     menu = """\n

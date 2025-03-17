@@ -4,9 +4,6 @@ from abc import ABC
 
 class Cliente:
     def __init__(self, cpf, nome, data_nascimento, endereco, contas):
-        self._cpf = cpf
-        self._nome = nome
-        self._data_nascimento = data_nascimento
         self._endereco = endereco
         self._contas = contas
     
@@ -15,6 +12,14 @@ class Cliente:
     
     def adicionar_conta(self, conta):
         self._contas.append(conta)
+
+class PessoaFisica(Cliente):
+    def __init__(self, cpf, nome, data_nascimento, endereco, contas):
+        self._cpf = cpf
+        self._nome = nome
+        self._data_nascimento = data_nascimento
+        self._endereco = endereco
+        self._contas = contas
 
 class Conta:
     def __init__(self, saldo, numero, agencia, cliente, historico):
@@ -35,6 +40,16 @@ class Conta:
     
     def depositar(self, valor):
         return False
+
+class ContaCorrente(Conta):
+    def __init__(self, saldo, numero, agencia, cliente, historico, limite, limite_saque):
+        self._saldo = saldo
+        self._numero = numero
+        self._agencia = agencia
+        self._cliente = cliente
+        self._historico = historico
+        self._limite = limite
+        self._limite_saque = limite_saque
 
 class Historico:
     def adicionar_transacao(self, transacao):

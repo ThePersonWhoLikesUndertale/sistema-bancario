@@ -3,11 +3,11 @@ import textwrap
 
 class Cliente:
     def __init__(self, cpf, nome, data_nascimento, endereco, contas):
-        self.cpf = cpf
-        self.nome = nome
-        self.data_nascimento = data_nascimento
-        self.endereco = endereco
-        self.contas = contas
+        self._cpf = cpf
+        self._nome = nome
+        self._data_nascimento = data_nascimento
+        self._endereco = endereco
+        self._contas = contas
     
     def realizar_transacao(self, conta, transacao):
         pass
@@ -17,13 +17,13 @@ class Cliente:
 
 class Conta:
     def __init__(self, saldo, numero, agencia, cliente, historico, limite, limite_saque):
-        self.saldo = saldo
-        self.numero = numero
-        self.agencia = agencia
-        self.cliente = cliente
-        self.historico = historico
-        self.limite = limite
-        self.limite_saque = limite_saque
+        self._saldo = saldo
+        self._numero = numero
+        self._agencia = agencia
+        self._cliente = cliente
+        self._historico = historico
+        self._limite = limite
+        self._limite_saque = limite_saque
     
     def nova_conta(self, cliente, numero):
         pass

@@ -13,7 +13,7 @@ class Cliente:
         pass
     
     def adicionar_conta(self, conta):
-        pass
+        self.contas.append(conta)
 
 class Conta:
     def __init__(self, saldo, numero, agencia, cliente, historico, limite, limite_saque):
@@ -32,6 +32,14 @@ class Conta:
         pass
     
     def depositar(self):
+        pass
+
+class Transacao:
+    def registrar(self, conta):
+        pass
+
+class Historico:
+    def adicionar_transacao(transacao: Transacao):
         pass
 
 def menu():

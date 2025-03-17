@@ -1,6 +1,39 @@
 from datetime import datetime, timezone, timedelta
 import textwrap
 
+class Cliente:
+    def __init__(self, cpf, nome, data_nascimento, endereco, contas):
+        self.cpf = cpf
+        self.nome = nome
+        self.data_nascimento = data_nascimento
+        self.endereco = endereco
+        self.contas = contas
+    
+    def realizar_transacao(self, conta, transacao):
+        pass
+    
+    def adicionar_conta(self, conta):
+        pass
+
+class Conta:
+    def __init__(self, saldo, numero, agencia, cliente, historico, limite, limite_saque):
+        self.saldo = saldo
+        self.numero = numero
+        self.agencia = agencia
+        self.cliente = cliente
+        self.historico = historico
+        self.limite = limite
+        self.limite_saque = limite_saque
+    
+    def nova_conta(self, cliente, numero):
+        pass
+    
+    def sacar(self, valor):
+        pass
+    
+    def depositar(self):
+        pass
+
 def menu():
     menu = """\n
     ========== MENU ==========

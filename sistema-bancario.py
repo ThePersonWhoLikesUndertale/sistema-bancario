@@ -31,7 +31,7 @@ class Conta:
     def sacar(self, valor):
         pass
     
-    def depositar(self):
+    def depositar(self, valor):
         pass
 
 class Transacao:

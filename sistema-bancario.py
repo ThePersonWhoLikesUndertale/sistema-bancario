@@ -209,7 +209,7 @@ def criar_usuario(usuarios):
     usuario = filtrar_usuario(cpf, usuarios)
     
     if usuario:
-        print("Esse usuário já existe!")
+        print("\nEsse usuário já existe!")
         return
     
     nome = input("Informe seu nome completo: ")
@@ -218,7 +218,7 @@ def criar_usuario(usuarios):
     
     usuarios.append(PessoaFisica(cpf, nome, data_nascimento, endereco))
     
-    print("Usuário criado com sucesso!")
+    print("\nUsuário criado com sucesso!")
 
 def filtrar_conta(numero, contas):
     contas_filtradas = [conta for conta in contas if conta.numero == numero]
@@ -276,6 +276,7 @@ def main():
             else:
                 usuario.adicionar_conta(ContaCorrente(numero_conta, usuario))
                 numero_conta += 1
+                print("\nConta criada com sucesso!")
         
         elif opcao == 4:
             cpf = float(input("Informe seu CPF (Só números): "))

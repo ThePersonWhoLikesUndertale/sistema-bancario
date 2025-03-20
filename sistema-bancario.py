@@ -138,7 +138,7 @@ class Historico:
             {
                 "tipo": transacao.__class__.__name__,
                 "valor": transacao.valor,
-                "data": datetime.now().strftime("%d/%m/%Y %H:%M:%s"),
+                "data": datetime.now(timezone(timedelta(hours=-3))).strftime("%d/%m/%Y %H:%M:%s"),
             }
         )
 

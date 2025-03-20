@@ -57,6 +57,10 @@ class Conta:
         return self._saldo
     
     @property
+    def numero(self):
+        return self._numero
+    
+    @property
     def agencia(self):
         return self._agencia
 
@@ -175,69 +179,119 @@ class Saque(Transacao):
         if sucesso_transacao:
             conta.historico.adicionar_transacao(self)
 
+def login():
+    menu = """\n
+    ========== MENU ==========
+    [1]\tLogin
+    [2]\tNovo Usuário
+    [3]\tNova Conta
+    [4]\tListar Contas
+    [0]\tSair
+    => """
+    return input(textwrap.dedent(menu))
+
 def menu():
     menu = """\n
     ========== MENU ==========
     [1]\tDepositar
     [2]\tSacar
     [3]\tExtrato
-    [4]\tNovo Usuário
-    [5]\tNova Conta
-    [6]\tListar Contas
-    [0]\tSair
+    [0]\tVoltar
     => """
     return input(textwrap.dedent(menu))
 
-def main():
-    LIMITE_TRANSACAO = 10
-    AGENCIA = "0001"
+def filtrar_usuario(cpf, usuarios):
+    usuarios_filtrados = [usuario for usuario in usuarios if usuario.cpf == cpf]
+    return usuarios_filtrados[0] if usuarios_filtrados else None
+
+def criar_usuario(usuarios):
+    cpf = float(input("Informe seu CPF (Só números): "))
+    usuario = filtrar_usuario(cpf, usuarios)
     
-    saldo = 0
-    limite = 500
-    extrato = ""
-    numero_transacao = 0
+    if usuario:
+        print("Esse usuário já existe!")
+        return
+    
+    nome = input("Informe seu nome completo: ")
+    data_nascimento = input("Informe sua data de nascimento (dd/mm/aaaa): ")
+    endereco = input("Informe seu endereço (logradouro, número - bairro - cidade/sigla estado): ")
+    
+    usuarios.append(PessoaFisica(cpf, nome, data_nascimento, endereco))
+    
+    print("Usuário criado com sucesso!")
+
+def filtrar_conta(numero, contas):
+    contas_filtradas = [conta for conta in contas if conta.numero == numero]
+    return contas_filtradas[0] if contas_filtradas else None
+
+def main():
     usuarios = []
-    contas = []
     numero_conta = 1
-    data_hora_atual = datetime.now(timezone(timedelta(hours=-3)))
-    mascara = "%d/%m/%Y %H:%M:%S"
-    data_hora_str = data_hora_atual.strftime(mascara)
     
     while True:
-        opcao = float(menu())
+        opcao = float(login())
         
         if opcao == 1:
-            deposito = float(input("Informe o valor do depósito: "))
-            saldo, extrato, numero_transacao = depositar(deposito, saldo, extrato, numero_transacao, LIMITE_TRANSACAO, data_hora_str)
-            
-        elif opcao == 2:
-            saque = float(input("Informe o valor do saque: "))
-            saldo, extrato, numero_transacao = sacar(
-                valor=saque, 
-                saldo=saldo, 
-                extrato=extrato, 
-                limite=limite, 
-                numero_transacao=numero_transacao, 
-                limite_transacao=LIMITE_TRANSACAO, 
-                data_hora_str=data_hora_str
-                )
+            cpf = float(input("Informe seu CPF (Só números): "))
+            usuario = filtrar_usuario(cpf, usuarios)
+    
+            if not usuario:
+                print("Esse usuário não existe, por favor tente novamente.")
+                pass
+            else:
+                conta_numero = float(input("Informe o número da conta que deseja usar: "))
+                conta = filtrar_conta(conta_numero, usuario.contas)
                 
-        elif opcao == 3:
-            mostrar_extrato(saldo, extrato=extrato)
+                if not conta:
+                    print("Essa conta não existe, por favor tente novamente.")
+                else:
+                    while True:
+                        opcao2 = float(menu())
+                
+                        if opcao2 == 1:
+                            pass
+                
+                        elif opcao2 == 2:
+                            pass
+                
+                        elif opcao2 == 3:
+                            pass
+                
+                        elif opcao2 == 0:
+                            break
+                
+                        else:
+                            print("Operação inválida! Por favor, selecione novamente a operação desejada.")
         
-        elif opcao == 4:
+        elif opcao == 2:
             criar_usuario(usuarios)
         
-        elif opcao == 5:
-            numero_conta = criar_conta(contas, AGENCIA, numero_conta, usuarios)
+        elif opcao == 3:
+            cpf = float(input("Informe seu CPF (Só números): "))
+            usuario = filtrar_usuario(cpf, usuarios)
+    
+            if not usuario:
+                print("Esse usuário não existe, por favor tente novamente.")
+                pass
+            else:
+                usuario.adicionar_conta(ContaCorrente(numero_conta, usuario))
+                numero_conta += 1
         
-        elif opcao == 6:
-            listar_contas(contas)
+        elif opcao == 4:
+            cpf = float(input("Informe seu CPF (Só números): "))
+            usuario = filtrar_usuario(cpf, usuarios)
+    
+            if not usuario:
+                print("Esse usuário não existe, por favor tente novamente.")
+            else:
+                for conta in usuario.contas:
+                    print("=" * 85)
+                    print(textwrap.dedent(conta.__str__()))
         
         elif opcao == 0:
             break
         
         else:
-            print("Operação inválida, por favor selecione novamente a operação desejada.")
+            print("Operação inválida! Por favor, selecione novamente a operação desejada.")
 
 main()

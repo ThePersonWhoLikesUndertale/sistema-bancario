@@ -236,14 +236,14 @@ def main():
             usuario = filtrar_usuario(cpf, usuarios)
     
             if not usuario:
-                print("Esse usuário não existe, por favor tente novamente.")
+                print("\nEsse usuário não existe, por favor tente novamente.")
                 pass
             else:
                 conta_numero = float(input("Informe o número da conta que deseja usar: "))
                 conta = filtrar_conta(conta_numero, usuario.contas)
                 
                 if not conta:
-                    print("Essa conta não existe, por favor tente novamente.")
+                    print("\nEssa conta não existe, por favor tente novamente.")
                 else:
                     while True:
                         opcao2 = float(menu())
@@ -261,7 +261,7 @@ def main():
                             break
                 
                         else:
-                            print("Operação inválida! Por favor, selecione novamente a operação desejada.")
+                            print("\nOperação inválida! Por favor, selecione novamente a operação desejada.")
         
         elif opcao == 2:
             criar_usuario(usuarios)
@@ -271,7 +271,7 @@ def main():
             usuario = filtrar_usuario(cpf, usuarios)
     
             if not usuario:
-                print("Esse usuário não existe, por favor tente novamente.")
+                print("\nEsse usuário não existe, por favor tente novamente.")
                 pass
             else:
                 usuario.adicionar_conta(ContaCorrente(numero_conta, usuario))
@@ -282,7 +282,7 @@ def main():
             usuario = filtrar_usuario(cpf, usuarios)
     
             if not usuario:
-                print("Esse usuário não existe, por favor tente novamente.")
+                print("\nEsse usuário não existe, por favor tente novamente.")
             else:
                 for conta in usuario.contas:
                     print("=" * 85)
@@ -292,6 +292,6 @@ def main():
             break
         
         else:
-            print("Operação inválida! Por favor, selecione novamente a operação desejada.")
+            print("\nOperação inválida! Por favor, selecione novamente a operação desejada.")
 
 main()

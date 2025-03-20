@@ -238,6 +238,8 @@ def main():
             if not usuario:
                 print("\nEsse usuário não existe, por favor tente novamente.")
                 pass
+            elif usuario.contas == []:
+                print("\nVocê ainda não tem uma conta! Tente criar uma nova.")
             else:
                 conta_numero = float(input("Informe o número da conta que deseja usar: "))
                 conta = filtrar_conta(conta_numero, usuario.contas)

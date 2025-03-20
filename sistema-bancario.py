@@ -206,6 +206,11 @@ def filtrar_usuario(cpf, usuarios):
 
 def criar_usuario(usuarios):
     cpf = float(input("Informe seu CPF (Só números): "))
+    
+    if len(str(cpf)) < 11:
+        print("\nO CPF não pode ter menos de 11 dígitos. Por favor, tente novamente.")
+        return
+    
     usuario = filtrar_usuario(cpf, usuarios)
     
     if usuario:

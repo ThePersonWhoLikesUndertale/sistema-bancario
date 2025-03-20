@@ -253,6 +253,16 @@ def listar_contas(usuarios):
             print("=" * 85)
             print(textwrap.dedent(conta.__str__()))
 
+def mostrar_extrato(conta):
+    print("\n========== EXTRATO ==========")
+    if conta.historico.transacoes == []:
+        print("Não foram realizadas movimentações.")
+    else:
+        for transacao in conta.historico.transacoes:
+            print(f"Tipo:{transacao["tipo"]}\nValor: R$ {transacao["valor"]:.2f}\nData e Hora: {transacao["data"]}\n\n")
+    print(f"Saldo atual: R$ {conta.saldo:.2f}")
+    print("=============================")
+
 def main():
     usuarios = []
     numero_conta = 1

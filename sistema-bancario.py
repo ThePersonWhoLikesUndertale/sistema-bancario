@@ -296,7 +296,7 @@ def main():
                             pass
                 
                         elif opcao2 == 3:
-                            pass
+                            mostrar_extrato(conta)
                 
                         elif opcao2 == 0:
                             break

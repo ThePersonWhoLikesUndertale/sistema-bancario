@@ -229,6 +229,30 @@ def filtrar_conta(numero, contas):
     contas_filtradas = [conta for conta in contas if conta.numero == numero]
     return contas_filtradas[0] if contas_filtradas else None
 
+def criar_conta(numero, usuarios):
+    cpf = float(input("Informe seu CPF (Só números): "))
+    usuario = filtrar_usuario(cpf, usuarios)
+    
+    if not usuario:
+        print("\nEsse usuário não existe, por favor tente novamente.")
+        return numero
+    else:
+        usuario.adicionar_conta(ContaCorrente(numero, usuario))
+        numero += 1
+        print("\nConta criada com sucesso!")
+        return numero
+
+def listar_contas(usuarios):
+    cpf = float(input("Informe seu CPF (Só números): "))
+    usuario = filtrar_usuario(cpf, usuarios)
+    
+    if not usuario:
+        print("\nEsse usuário não existe, por favor tente novamente.")
+    else:
+        for conta in usuario.contas:
+            print("=" * 85)
+            print(textwrap.dedent(conta.__str__()))
+
 def main():
     usuarios = []
     numero_conta = 1
@@ -274,27 +298,10 @@ def main():
             criar_usuario(usuarios)
         
         elif opcao == 3:
-            cpf = float(input("Informe seu CPF (Só números): "))
-            usuario = filtrar_usuario(cpf, usuarios)
-    
-            if not usuario:
-                print("\nEsse usuário não existe, por favor tente novamente.")
-                pass
-            else:
-                usuario.adicionar_conta(ContaCorrente(numero_conta, usuario))
-                numero_conta += 1
-                print("\nConta criada com sucesso!")
+            numero_conta = criar_conta(numero_conta, usuarios)
         
         elif opcao == 4:
-            cpf = float(input("Informe seu CPF (Só números): "))
-            usuario = filtrar_usuario(cpf, usuarios)
-    
-            if not usuario:
-                print("\nEsse usuário não existe, por favor tente novamente.")
-            else:
-                for conta in usuario.contas:
-                    print("=" * 85)
-                    print(textwrap.dedent(conta.__str__()))
+            listar_contas(usuarios)
         
         elif opcao == 0:
             break

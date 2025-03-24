@@ -97,14 +97,14 @@ class Conta:
         return False
 
 class ContaCorrente(Conta):
-    def __init__(self, numero, cliente, limite=500, limite_saque=3):
+    def __init__(self, numero, cliente, limite=500, limite_saque=2):
         super().__init__(numero, cliente)
         self._limite = limite
         self._limite_saque = limite_saque
     
     def sacar(self, valor):
         numero_saques = len(
-            [transacao for transacao in self._historico.transacoes if transacao["tipo"] == Saque.__name__]
+            [transacao for transacao in self.historico.transacoes if transacao["tipo"] == Saque.__name__]
         )
         
         if numero_saques > self._limite_saque:
@@ -120,9 +120,9 @@ class ContaCorrente(Conta):
     
     def __str__(self):
         return f"""\
-            Agência:\t{self._agencia}
-            C/C:\t\t{self._numero}
-            Titular:\t{self._cliente._nome}    
+            Agência:\t{self.agencia}
+            C/C:\t\t{self.numero}
+            Titular:\t{self.cliente.nome}    
         """
 
 class Historico:
@@ -134,11 +134,11 @@ class Historico:
         return self._transacoes
     
     def adicionar_transacao(self, transacao):
-        self._transacoes.append(
+        self.transacoes.append(
             {
                 "tipo": transacao.__class__.__name__,
                 "valor": transacao.valor,
-                "data": datetime.now(timezone(timedelta(hours=-3))).strftime("%d/%m/%Y %H:%M:%s"),
+                "data": datetime.now(timezone(timedelta(hours=-3))).strftime("%d/%m/%Y %H:%M:%S"),
             }
         )
 
@@ -157,6 +157,7 @@ class Deposito(Transacao):
     def __init__(self, valor):
         self._valor = valor
     
+    @property
     def valor(self):
         return self._valor
     
@@ -170,6 +171,7 @@ class Saque(Transacao):
     def __init__(self, valor):
         self._valor = valor
     
+    @property
     def valor(self):
         return self._valor
     
@@ -259,7 +261,7 @@ def mostrar_extrato(conta):
         print("Não foram realizadas movimentações.")
     else:
         for transacao in conta.historico.transacoes:
-            print(f"Tipo:{transacao["tipo"]}\nValor: R$ {transacao["valor"]:.2f}\nData e Hora: {transacao["data"]}\n\n")
+            print(f"Tipo: {transacao["tipo"]}\nValor: R$ {transacao["valor"]:.2f}\nData e Hora: {transacao["data"]}\n\n")
     print(f"Saldo atual: R$ {conta.saldo:.2f}")
     print("=============================")
 
@@ -290,10 +292,12 @@ def main():
                         opcao2 = float(menu())
                 
                         if opcao2 == 1:
-                            pass
+                            valor = float(input("Digite o valor que deseja depositar: "))
+                            Deposito(valor).registrar(conta)
                 
                         elif opcao2 == 2:
-                            pass
+                            valor = float(input("Digite o valor que deseja sacar: "))
+                            Saque(valor).registrar(conta)
                 
                         elif opcao2 == 3:
                             mostrar_extrato(conta)
